@@ -1,0 +1,41 @@
+from outlook_msg import Message
+import os
+import re
+
+n = 1
+pasta = 'C:\\Users\\Gabriel\\Desktop\\ESTAGIO\\INTIMAÇÕES\\INTIMAÇÕES\\28.04.21'
+os.chdir(pasta)
+
+
+lista_docs = [x for x in os.listdir(pasta)]
+
+def rename(diretorio, nome_old, nome_new):  # Função renomeia
+    for arquivos in os.listdir(diretorio):
+        os.rename(os.path.join(diretorio, arquivos),
+                  os.path.join(diretorio, arquivos.replace(nome_old, nome_new)))
+
+
+for doc in lista_docs:
+    path = pasta + "\\" + doc
+
+    with open(path) as msg_file:
+        msg = Message(msg_file)
+
+    contents = msg.body
+    try:
+        cnj_temp = re.search(r'\d{7}\W\d{2}\W\d{4}\W\d\W\d{2}\W\d{4}', contents)
+    except:
+        cnj_temp = re.search(r'\d{20}', contents)
+    cnj = cnj_temp.group()
+    print(cnj)
+    cnjmsg = cnj + ".msg"
+    print(cnjmsg)
+    msg = ""
+    try:
+        rename(pasta, doc, cnjmsg)
+        if n != 1:
+            n = 1
+    except:
+        cnjmsgN = cnj + " {}{}{}{}".format('(', n, ')', '.msg')
+        rename(pasta, doc, cnjmsgN)
+        n += 1
