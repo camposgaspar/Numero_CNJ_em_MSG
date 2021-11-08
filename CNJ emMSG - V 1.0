@@ -3,7 +3,7 @@ import os
 import re
 
 n = 1
-pasta = 'C:\\Users\\Gabriel\\Desktop\\ESTAGIO\\INTIMAÇÕES\\INTIMAÇÕES\\28.04.21'
+pasta = 'INTIMAÇÕES\\28.04.21'
 os.chdir(pasta)
 
 
